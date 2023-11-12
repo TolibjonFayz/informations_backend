@@ -1,21 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Column, DataType, Model, Table } from 'sequelize-typescript';
 
-interface AdminAtr {
+interface UserAtr {
   first_name: String;
   last_name: String;
   username: String;
-  phone_number: String;
+  refresh_token: String;
   email: String;
   password: String;
-  refresh_token: String;
-  unique_id: String;
-  is_active: Boolean;
-  is_creator: Boolean;
 }
 
-@Table({ tableName: 'Admin' })
-export class Admin extends Model<Admin, AdminAtr> {
+@Table({ tableName: 'User' })
+export class User extends Model<User, UserAtr> {
   @ApiProperty({ example: 1, description: 'Unique id' })
   @Column({
     type: DataType.INTEGER,
@@ -34,54 +30,33 @@ export class Admin extends Model<Admin, AdminAtr> {
   @ApiProperty({ example: 'Falonchiyev', description: 'Familiya' })
   @Column({
     type: DataType.STRING,
-    allowNull: false,
   })
   last_name: string;
 
-  @ApiProperty({ example: '+998901234567', description: 'Raqam' })
+  @ApiProperty({ example: 'falonchioff', description: 'Username' })
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  phone_number: string;
+  username: string;
 
-  @ApiProperty({ example: 'Falonchioff@gmail.com', description: 'Email' })
+  @ApiProperty({ example: 'falonchi@gmail.com', description: 'Username' })
   @Column({
     type: DataType.STRING,
-    allowNull: false,
     unique: true,
+    allowNull: false,
   })
   email: string;
-
-  @ApiProperty({ example: 'qwerty', description: 'Parol' })
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  password: string;
 
   @Column({
     type: DataType.STRING,
   })
   refresh_token: string;
 
-  @ApiProperty({
-    example: 'sdlak',
-    description: 'Adminni activ qilish uchun ishlatiladigan id',
-  })
+  @ApiProperty({ example: 'qweerty', description: 'Parol' })
   @Column({
     type: DataType.STRING,
+    allowNull: false,
   })
-  unique_id: string;
-
-  @Column({
-    type: DataType.BOOLEAN,
-    defaultValue: false,
-  })
-  is_active: boolean;
-
-  @Column({
-    type: DataType.BOOLEAN,
-  })
-  is_creator: boolean;
+  password: string;
 }

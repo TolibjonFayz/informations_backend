@@ -228,15 +228,13 @@ export class AdminService {
   //Get all admins
   async getAllAdmins() {
     const admins = await this.AdminRepository.findAll();
-    if (admins.length > 0) return admins;
-    else return 'Ant admin not found';
+    return admins;
   }
 
   //Get admin by id
   async getAdminById(id: number) {
     const admin = await this.AdminRepository.findByPk(id);
-    if (admin) return admin;
-    else return 'Admin not found at this id';
+    return admin;
   }
 
   //Update admin by id

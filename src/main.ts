@@ -1,20 +1,32 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as cookieParser from 'cookie-parser';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ValidationPipe } from '@nestjs/common';
 
-async function bootstrap() {
+const start = async () => {
   try {
     const PORT = process.env.PORT || 3333;
-    const app = await NestFactory.create(AppModule);
 
-    app.use(cookieParser());
+    const app = await NestFactory.create(AppModule);
     app.setGlobalPrefix('api');
 
+    const config = new DocumentBuilder()
+      .setTitle('Informations')
+      .setDescription('My first real project')
+      .setVersion('1.0.0')
+      .addTag('NestJS, Postgres, Sequelize')
+      .build();
+    const document = SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup('/api/docs', app, document);
+
+    app.use(cookieParser());
+    app.useGlobalPipes(new ValidationPipe());
     await app.listen(PORT, () => {
-      console.log(`Server is running at ${PORT} port`);
+      console.log(`Server is running on port ${PORT}`);
     });
   } catch (error) {
     console.log(error);
   }
-}
-bootstrap();
+};
+start();

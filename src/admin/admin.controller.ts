@@ -17,12 +17,17 @@ import { Admin } from './model/admin.model';
 import { UpdateAdminDto } from './dto/update-admin.dto';
 import { UpdateAdminPassDto } from './dto/update-admin-password.dto';
 import { UpdateAdminEmailDto } from './dto/update-admin-email.dto';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Admins')
 @Controller('admin')
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
   //SignUp
+  @ApiResponse({ status: 201, description: 'Admin successfully signed up' })
+  @ApiResponse({ status: 400, description: 'Something is went wrong' })
+  @ApiOperation({ summary: 'Signup admin' })
   @Post('signup')
   async signUp(
     @Body() signUpAdminDto: SignupAdminDto,
@@ -32,12 +37,14 @@ export class AdminController {
   }
 
   //Activate admin
+  @ApiOperation({ summary: 'Activate admin' })
   @Get('activate/:link')
   activate(@Param('link') link: string) {
     return this.adminService.activateAdmin(link);
   }
 
   //SignIn admin
+  @ApiOperation({ summary: 'Sigin admin' })
   @Post('signin')
   async signin(
     @Body() signInAdminDto: SignInAdminDto,
@@ -47,6 +54,7 @@ export class AdminController {
   }
 
   //SignOut admin
+  @ApiOperation({ summary: 'Signout admin' })
   @Post('signout')
   async signOut(
     @CookieGetter('refresh_token') refresh_token: string,
@@ -56,6 +64,7 @@ export class AdminController {
   }
 
   //RefreshToken Admin
+  @ApiOperation({ summary: 'Refresh token' })
   @Post(':id/refresh')
   async refresh(
     @Param('id') id: string,
@@ -66,18 +75,21 @@ export class AdminController {
   }
 
   //Get all admins
+  @ApiOperation({ summary: 'Get all admins' })
   @Get('all')
-  async getAllAdmin(): Promise<Admin[] | any> {
+  async getAllAdmin(): Promise<Admin[]> {
     return this.adminService.getAllAdmins();
   }
 
   //Get admin by id
+  @ApiOperation({ summary: 'Get admin by id' })
   @Get(':id')
-  async getAdminById(@Param('id') id: number): Promise<Admin | any> {
+  async getAdminById(@Param('id') id: number): Promise<Admin> {
     return this.adminService.getAdminById(id);
   }
 
   //Update admin by id
+  @ApiOperation({ summary: 'Update admin' })
   @Put(':id')
   async updateAdmin(
     @Param('id') id: number,
@@ -87,6 +99,7 @@ export class AdminController {
   }
 
   //Update Admin password by id
+  @ApiOperation({ summary: 'Update admin password' })
   @Put('pass/:id')
   async updateAdminPass(
     @Param('id') id: number,
@@ -96,6 +109,7 @@ export class AdminController {
   }
 
   //update admin email by id
+  @ApiOperation({ summary: 'Update admin email' })
   @Put('email/:id')
   async updateAdminEmail(
     @Param('id') id: number,
@@ -105,6 +119,7 @@ export class AdminController {
   }
 
   //Delete admin by id
+  @ApiOperation({ summary: 'Delete worker' })
   @Delete(':id')
   async deleteAdmin(@Param('id') id: number): Promise<string> {
     return this.adminService.deleteAdminById(id);
