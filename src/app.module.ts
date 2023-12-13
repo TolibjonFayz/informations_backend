@@ -5,6 +5,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { UserModule } from './user/user.module';
 import { CategoryModule } from './category/category.module';
 import { BlogModule } from './blog/blog.module';
+import { UserReadBlogModule } from './user_read_blog/user_read_blog.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { BlogModule } from './blog/blog.module';
     UserModule,
     CategoryModule,
     BlogModule,
+    UserReadBlogModule,
   ],
   controllers: [],
   providers: [],
