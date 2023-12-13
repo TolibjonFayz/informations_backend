@@ -6,6 +6,7 @@ import { UserModule } from './user/user.module';
 import { CategoryModule } from './category/category.module';
 import { BlogModule } from './blog/blog.module';
 import { UserReadBlogModule } from './user_read_blog/user_read_blog.module';
+import { CommentModule } from './comment/comment.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { UserReadBlogModule } from './user_read_blog/user_read_blog.module';
     CategoryModule,
     BlogModule,
     UserReadBlogModule,
+    CommentModule,
   ],
   controllers: [],
   providers: [],
