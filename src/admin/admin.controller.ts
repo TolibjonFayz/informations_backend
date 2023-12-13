@@ -77,14 +77,14 @@ export class AdminController {
   //Get all admins
   @ApiOperation({ summary: 'Get all admins' })
   @Get('all')
-  async getAllAdmin(): Promise<Admin[]> {
+  async getAllAdmin(): Promise<Admin[] | any> {
     return this.adminService.getAllAdmins();
   }
 
   //Get admin by id
   @ApiOperation({ summary: 'Get admin by id' })
   @Get(':id')
-  async getAdminById(@Param('id') id: number): Promise<Admin> {
+  async getAdminById(@Param('id') id: number): Promise<Admin | any> {
     return this.adminService.getAdminById(id);
   }
 

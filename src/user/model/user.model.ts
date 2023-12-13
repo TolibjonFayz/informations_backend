@@ -10,7 +10,7 @@ interface UserAtr {
   password: String;
 }
 
-@Table({ tableName: 'User' })
+@Table({ tableName: 'user' })
 export class User extends Model<User, UserAtr> {
   @ApiProperty({ example: 1, description: 'Unique id' })
   @Column({

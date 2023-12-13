@@ -3,7 +3,7 @@ import { AdminModule } from './admin/admin.module';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { UserModule } from './user/user.module';
-import { TypeModule } from './type/type.module';
+import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [
@@ -21,7 +21,7 @@ import { TypeModule } from './type/type.module';
     }),
     AdminModule,
     UserModule,
-    TypeModule,
+    CategoryModule,
   ],
   controllers: [],
   providers: [],

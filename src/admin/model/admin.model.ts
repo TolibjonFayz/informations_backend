@@ -14,7 +14,7 @@ interface AdminAtr {
   is_creator: Boolean;
 }
 
-@Table({ tableName: 'Admin' })
+@Table({ tableName: 'admin' })
 export class Admin extends Model<Admin, AdminAtr> {
   @ApiProperty({ example: 1, description: 'Unique id' })
   @Column({

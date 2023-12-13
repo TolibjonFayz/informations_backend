@@ -2,6 +2,7 @@ import {
   BadRequestException,
   ForbiddenException,
   Injectable,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { SignupAdminDto } from './dto/sign-up.admin.dto';
@@ -16,6 +17,7 @@ import { SignInAdminDto } from './dto/signin_admin.dto';
 import { UpdateAdminDto } from './dto/update-admin.dto';
 import { UpdateAdminPassDto } from './dto/update-admin-password.dto';
 import { UpdateAdminEmailDto } from './dto/update-admin-email.dto';
+import { NotFoundError } from 'rxjs';
 
 @Injectable()
 export class AdminService {
@@ -228,13 +230,18 @@ export class AdminService {
   //Get all admins
   async getAllAdmins() {
     const admins = await this.AdminRepository.findAll();
+    if (!admins.length) {
+      throw new NotFoundException('Any admin not found');
+    }
     return admins;
   }
 
   //Get admin by id
   async getAdminById(id: number) {
     const admin = await this.AdminRepository.findByPk(id);
-    return admin;
+    if (!admin) {
+      throw new NotFoundException('Admin not found at this id');
+    }
   }
 
   //Update admin by id

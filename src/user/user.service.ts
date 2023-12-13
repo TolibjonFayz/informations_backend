@@ -2,6 +2,7 @@ import {
   BadRequestException,
   ForbiddenException,
   Injectable,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
@@ -37,7 +38,6 @@ export class UserService {
 
     //password is hashing
     const hashed_password = await bcrypt.hash(signUpUserDto.password, 7);
-    console.log(hashed_password);
     const newuser = await this.UserRepository.create({
       ...signUpUserDto,
       password: hashed_password,
@@ -48,7 +48,6 @@ export class UserService {
 
     //Update user
     const hashed_refresh_token = await bcrypt.hash(tokens.refreshToken, 7);
-    const uniqueKey: string = uuidv4();
     const updateUser = await this.UserRepository.update(
       {
         refresh_token: hashed_refresh_token,
@@ -191,12 +190,18 @@ export class UserService {
   //Get all users
   async getAllUsers() {
     const users = await this.UserRepository.findAll();
+    if (!users.length) {
+      throw new NotFoundException('Any user not found');
+    }
     return users;
   }
 
   //Get one user by id
   async getUserById(id: number) {
     const user = await this.UserRepository.findByPk(id);
+    if (!user) {
+      throw new NotFoundException('User not found at this id');
+    }
     return user;
   }
 
