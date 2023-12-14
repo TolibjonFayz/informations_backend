@@ -3,10 +3,12 @@ import {
   Column,
   DataType,
   ForeignKey,
+  HasMany,
   Model,
   Table,
 } from 'sequelize-typescript';
 import { Category } from '../../category/models/category.model';
+import { Picture } from '../../picture/models/picture.model';
 
 interface BlogAtr {
   title: string;
@@ -57,4 +59,7 @@ export class Blog extends Model<Blog, BlogAtr> {
   category_id: number;
   @BelongsTo(() => Category)
   category: Category;
+
+  @HasMany(() => Picture)
+  picture: Picture;
 }

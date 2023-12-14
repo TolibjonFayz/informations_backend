@@ -8,6 +8,7 @@ import { BlogModule } from './blog/blog.module';
 import { UserReadBlogModule } from './user_read_blog/user_read_blog.module';
 import { CommentModule } from './comment/comment.module';
 import { PictureModule } from './picture/picture.module';
+import { SavedBlogsModule } from './saved_blogs/saved_blogs.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { PictureModule } from './picture/picture.module';
     UserReadBlogModule,
     CommentModule,
     PictureModule,
+    SavedBlogsModule,
   ],
   controllers: [],
   providers: [],
