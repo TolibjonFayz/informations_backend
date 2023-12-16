@@ -7,6 +7,8 @@ import { CreateBlogDto } from './dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/update-blog.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { Blog } from './model/blog.model';
+import Sequelize from 'sequelize';
+const { Op } = Sequelize;
 
 @Injectable()
 export class BlogService {
@@ -30,6 +32,19 @@ export class BlogService {
     if (!blogs.length) {
       throw new NotFoundException('Any blog not found');
     }
+    return blogs;
+  }
+
+  //Search  blogs
+  async searchBlogs(text: string) {
+    const blogs = await this.BlogRepository.findAll({
+      where: {
+        body: {
+          [Op.like]: `%${text}%`,
+        },
+      },
+      include: { all: true },
+    });
     return blogs;
   }
 
