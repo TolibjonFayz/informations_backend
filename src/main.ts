@@ -11,6 +11,14 @@ const start = async () => {
     const app = await NestFactory.create(AppModule);
     app.setGlobalPrefix('api');
 
+    app.enableCors({
+      origin: '*',
+      methods: 'GET,PUT,POST,DELETE',
+      allowedHeaders: 'Content-Type, Authorization',
+      credentials: true,
+      optionsSuccessStatus: 200,
+    });
+
     const config = new DocumentBuilder()
       .setTitle('Informations')
       .setDescription('My first real project')
