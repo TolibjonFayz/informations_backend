@@ -12,6 +12,7 @@ import { CreateBlogDto } from './dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/update-blog.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { SearchBlogDto } from './dto/search-blog.dto';
+import { SearchByQueryBlogDto } from './dto/search-query-blog.dto';
 
 @ApiTags('Blog')
 @Controller('blog')
@@ -30,6 +31,13 @@ export class BlogController {
   @Post('search')
   async search(@Body() searchBlogDto: SearchBlogDto) {
     return this.blogService.searchBlogs(searchBlogDto.text);
+  }
+
+  //Search blog
+  @ApiOperation({ summary: 'Search blog by query' })
+  @Post('searchquery')
+  async searchquery(@Body() searchByQueryBlogDto: SearchByQueryBlogDto) {
+    return this.blogService.searchByQueryBlog(searchByQueryBlogDto);
   }
 
   //Get all blogs

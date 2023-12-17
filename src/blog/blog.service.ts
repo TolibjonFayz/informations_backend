@@ -8,6 +8,7 @@ import { UpdateBlogDto } from './dto/update-blog.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { Blog } from './model/blog.model';
 import Sequelize from 'sequelize';
+import { SearchByQueryBlogDto } from './dto/search-query-blog.dto';
 const { Op } = Sequelize;
 
 @Injectable()
@@ -39,9 +40,23 @@ export class BlogService {
   async searchBlogs(text: string) {
     const blogs = await this.BlogRepository.findAll({
       where: {
-        body: {
+        title: {
           [Op.like]: `%${text}%`,
         },
+      },
+      include: { all: true },
+    });
+    return blogs;
+  }
+
+  //Search  blogs
+  async searchByQueryBlog(searchByQueryBlogDto: SearchByQueryBlogDto) {
+    const blogs = await this.BlogRepository.findAll({
+      where: {
+        title: {
+          [Op.like]: `%${searchByQueryBlogDto.title}%`,
+        },
+        category_id: searchByQueryBlogDto.category_id,
       },
       include: { all: true },
     });
