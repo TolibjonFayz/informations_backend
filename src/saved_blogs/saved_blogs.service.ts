@@ -76,9 +76,6 @@ export class SavedBlogService {
         },
       ],
     });
-    if (!urblogs.length) {
-      throw new NotFoundException('User Read Blogs not found at this user_id');
-    }
     return urblogs;
   }
 
