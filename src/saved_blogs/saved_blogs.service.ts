@@ -7,6 +7,8 @@ import { InjectModel } from '@nestjs/sequelize';
 import { SBlog } from './models/saved_blogs.model';
 import { CreateSBlogDto } from './dto/create-saved_blog.dto';
 import { UpdateSBlogDto } from './dto/update-saved_blog.dto';
+import { Blog } from '../blog/model/blog.model';
+import { Picture } from '../picture/models/picture.model';
 
 @Injectable()
 export class SavedBlogService {
@@ -62,7 +64,12 @@ export class SavedBlogService {
   async getURBlogByUserId(user_id: number) {
     const urblogs = await this.SBlogRepository.findAll({
       where: { user_id: user_id },
-      include: { all: true },
+      include: [
+        {
+          model: Blog,
+          include: [{ model: Picture }],
+        },
+      ],
     });
     if (!urblogs.length) {
       throw new NotFoundException('User Read Blogs not found at this user_id');
