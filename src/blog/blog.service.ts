@@ -7,7 +7,7 @@ import { CreateBlogDto } from './dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/update-blog.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { Blog } from './model/blog.model';
-import Sequelize from 'sequelize';
+import Sequelize, { where } from 'sequelize';
 import { SearchByQueryBlogDto } from './dto/search-query-blog.dto';
 const { Op } = Sequelize;
 
@@ -69,6 +69,13 @@ export class BlogService {
       where: { id: id },
       include: { all: true },
     });
+    await this.BlogRepository.update(
+      { views: blog.views + 1 },
+      {
+        where: { id: id },
+        returning: true,
+      },
+    );
     if (!blog) {
       throw new NotFoundException('Blog not found at this id');
     }
