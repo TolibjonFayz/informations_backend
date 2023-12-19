@@ -41,7 +41,7 @@ export class BlogService {
     const blogs = await this.BlogRepository.findAll({
       where: {
         title: {
-          [Op.like]: `%${text}%`,
+          [Op.iLike]: `%${text}%`,
         },
       },
       include: { all: true },
@@ -54,7 +54,7 @@ export class BlogService {
     const blogs = await this.BlogRepository.findAll({
       where: {
         title: {
-          [Op.like]: `%${searchByQueryBlogDto.title}%`,
+          [Op.iLike]: `%${searchByQueryBlogDto.title}%`,
         },
         category_id: searchByQueryBlogDto.category_id,
       },
