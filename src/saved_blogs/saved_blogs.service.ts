@@ -9,6 +9,7 @@ import { CreateSBlogDto } from './dto/create-saved_blog.dto';
 import { UpdateSBlogDto } from './dto/update-saved_blog.dto';
 import { Blog } from '../blog/model/blog.model';
 import { Picture } from '../picture/models/picture.model';
+import { Category } from '../category/models/category.model';
 
 @Injectable()
 export class SavedBlogService {
@@ -68,6 +69,10 @@ export class SavedBlogService {
         {
           model: Blog,
           include: [{ model: Picture }],
+        },
+        {
+          model: Blog,
+          include: [{ model: Category }],
         },
       ],
     });
