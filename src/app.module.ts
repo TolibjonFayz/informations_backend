@@ -10,6 +10,9 @@ import { CommentModule } from './comment/comment.module';
 import { PictureModule } from './picture/picture.module';
 import { SavedBlogsModule } from './saved_blogs/saved_blogs.module';
 
+// Import pg for potential SSL configuration
+const pg = require('pg');
+
 @Module({
   imports: [
     ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),
@@ -20,6 +23,12 @@ import { SavedBlogsModule } from './saved_blogs/saved_blogs.module';
       username: process.env.POSTGRES_USER,
       password: String(process.env.POSTGRES_PASSWORD),
       database: process.env.POSTGRES_DB,
+      dialectOptions: {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false, // You might need to set this to true in production
+        },
+      },
       models: [],
       autoLoadModels: true,
       logging: false,
