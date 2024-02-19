@@ -51,16 +51,40 @@ export class BlogService {
 
   //Search  blogs
   async searchByQueryBlog(searchByQueryBlogDto: SearchByQueryBlogDto) {
-    const blogs = await this.BlogRepository.findAll({
-      where: {
-        title: {
-          [Op.iLike]: `%${searchByQueryBlogDto.title}%`,
+    if (searchByQueryBlogDto.category_id && searchByQueryBlogDto.title) {
+      return await this.BlogRepository.findAll({
+        where: {
+          title: {
+            [Op.iLike]: `%${searchByQueryBlogDto.title}%`,
+          },
+          category_id: searchByQueryBlogDto.category_id,
         },
-        category_id: searchByQueryBlogDto.category_id,
-      },
-      include: { all: true },
-    });
-    return blogs;
+        include: { all: true },
+      });
+    }
+    if (searchByQueryBlogDto.title && !searchByQueryBlogDto.category_id) {
+      return await this.BlogRepository.findAll({
+        where: {
+          title: {
+            [Op.iLike]: `%${searchByQueryBlogDto.title}%`,
+          },
+        },
+        include: { all: true },
+      });
+    }
+    if (!searchByQueryBlogDto.title && searchByQueryBlogDto.category_id) {
+      return await this.BlogRepository.findAll({
+        where: {
+          category_id: searchByQueryBlogDto.category_id,
+        },
+        include: { all: true },
+      });
+    }
+    if (!searchByQueryBlogDto.title && !searchByQueryBlogDto.category_id) {
+      return await this.BlogRepository.findAll({
+        include: { all: true },
+      });
+    }
   }
 
   //Get blog by id
